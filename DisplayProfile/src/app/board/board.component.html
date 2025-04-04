@@ -1,0 +1,26 @@
+<p>
+    <span>Username: </span>
+    <input [(ngModel)]="username">
+    <button (click)="getUsers()">Search</button>
+</p>
+<hr>
+
+<p>
+    <span>Filter: </span>
+    <input (keyup)="onFilter()" [(ngModel)]="keyword">
+</p>
+<hr>
+
+<table>
+    <tr>
+        <th>User Id</th>
+        <th>Username</th>
+        <th>Profile URL Link</th>
+    </tr>
+    <tr *ngFor="let user of usersFiltered">
+        <td>{{user.id}}</td>
+        <td>{{user.login}}</td>
+        <td>{{user.avatar_url}}</td>
+    </tr>
+</table>
+
