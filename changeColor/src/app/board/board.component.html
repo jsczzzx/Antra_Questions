@@ -1,0 +1,10 @@
+<div class="container">
+    <h2 [ngStyle]="{'color': selectedColor}">Complete Angular Tutorial For Beginners</h2>
+
+    <div *ngFor="let item of data" class="topic" 
+        [ngStyle]="{ 'border-right': selectedColor === item.color ? 'solid 3px ' + selectedColor : 'solid 1px gray' }">
+        <h4>{{item.title}}</h4>
+        <span>{{item.body}}</span>
+        <button [ngStyle]="{backgroundColor: item.color}" (click)="onSelectColor(item.color)">Set {{item.color}}</button>
+    </div>
+</div>
