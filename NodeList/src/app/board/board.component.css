@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+}
+
+.left {
+    background-color: ghostwhite;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    padding-right: 50px;
+    width: 50%;
+    gap: 30px;
+}
+
+textarea {
+    height:100px;
+}

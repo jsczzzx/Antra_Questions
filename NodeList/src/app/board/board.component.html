@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="left">
+        <h2>Notes <span (click)="createNewNote()">+</span></h2>
+        <h3 *ngFor="let note of notes; let i = index" (click)="onSelect(i)">{{note.title}} <span (click)="deleteNote(i)">[X]</span></h3>
+    </div>
+    <div class="right">
+        <input [(ngModel)]="currentNote.title">
+        <textarea [(ngModel)]="currentNote.content"></textarea>
+        <div>
+            <button (click)="revertNote()">Revert</button>
+            <button (click)="saveNote()">Save</button>
+        </div>
+    </div>
+</div>
