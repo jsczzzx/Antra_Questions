@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="cards">
+        <input placeholder="Search Books" [formControl]="searchControl">
+        <div *ngFor="let book of books" (click)="selectBook(book)">
+            <app-card [book]="book"></app-card>
+        </div>
+    </div>
+
+    <div class="wishlist">
+        <h2>My Reading Wishlist({{booksSelected.length}})</h2>
+        <div *ngFor="let book of booksSelected">
+            {{book.title}}
+            <span (click)="remove(book)">[X]</span>
+        </div>
+    </div>
+</div>
+
+
+

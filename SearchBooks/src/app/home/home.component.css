@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+}
+
+.cards {
+    flex: 2;
+}
+
+
+.wishlist {
+    flex: 1;
+}

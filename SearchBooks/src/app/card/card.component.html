@@ -1,0 +1,15 @@
+<div class="card">
+    <img [src]="book.imageUrl">
+    <div class="container">
+        <h3>{{book.title}}</h3>
+        <span>
+            <b>Author: </b>
+            <span><b>Author: </b>{{ book.authors?.join(', ') }}</span>
+        </span>
+        <span><b>Publisher: </b>{{book.publisher}}</span>
+        <span><b>Publish Date: </b>{{book.publishedDate}}</span>
+        <span><b>Description: </b>{{book.description | slice:0:500}}...</span>
+    </div>
+</div>
+
+
