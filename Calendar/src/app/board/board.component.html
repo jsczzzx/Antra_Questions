@@ -1,23 +1,20 @@
-<div class="calendar">
-    <div class="calendar-header">
-      <button (click)="goToPreviousMonth()">←</button>
-      <span>{{ currentDate | date: 'MMMM y' }}</span>
-      <button (click)="goToNextMonth()">→</button>
-    </div>
-  
-    <table>
-      <thead>
-        <tr>
-          <th *ngFor="let day of weekdays">{{ day }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let week of calendar">
-          <td *ngFor="let day of week">
-            {{ day || '' }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<div class="menu">
+    <button (click)="goLast()">{{months[(time.getMonth()-1+12)%12]}}</button>
+    <span>{{months[this.time.getMonth()]}}/{{this.time.getFullYear()}}</span>
+    <button (click)="goNext()">{{months[(time.getMonth()+1+12)%12]}}</button>
+</div>
+
+<h3 *ngIf="selectedDate !== ''">You Selected: {{selectedDate}}</h3>
+<h3 *ngIf="selectedDate === ''">Not Selected</h3>
+<table>
+    <tr>
+        <th *ngFor="let weekday of weekdays">{{weekday}}</th>
+    </tr>
+    <tr *ngFor="let week of calendar">
+        <td *ngFor="let day of week" (click)="selectDay(day)">
+            <span *ngIf="day !== -1">
+                {{day}}
+            </span>
+        </td>
+    </tr>
+</table>

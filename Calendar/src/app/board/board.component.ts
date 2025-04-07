@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { first, last } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -9,64 +10,66 @@ import { Component } from '@angular/core';
   styleUrl: './board.component.css'
 })
 export class BoardComponent {
-  currentDate = new Date();
+
+  calendar: number[][] = [];
+  time: Date = new Date();
+
+  months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  calendar: (number | null)[][] = [];
+
+  selectedDate = "";
 
   ngOnInit() {
-    this.generateCalendar();
+    this.generateMonth(this.time);
   }
 
-  generateCalendar() {
-    const year = this.currentDate.getFullYear();
-    const month = this.currentDate.getMonth();
-
-    const firstDay = new Date(year, month, 1).getDay();
-    const lastDate = new Date(year, month + 1, 0).getDate();
-
-    const weeks: (number | null)[][] = [];
-    let week: (number | null)[] = [];
-
-    // Fill empty slots before the first day
-    for (let i = 0; i < firstDay; i++) {
-      week.push(null);
+  generateMonth(now: Date) {
+    this.selectedDate = "";
+    let firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+    let lastDay = new Date(now.getFullYear(), now.getMonth()+1, 0);
+    let currentWeek = [];
+    let count = 1;
+    for (let i = 0; i < firstDay.getDay(); i++) {
+      currentWeek.push(-1);
     }
-
-    // Fill the days of the month
-    for (let day = 1; day <= lastDate; day++) {
-      week.push(day);
-      if (week.length === 7) {
-        weeks.push(week);
-        week = [];
+    for (let i = firstDay.getDay(); i <= 6; i++) {
+      currentWeek.push(count);
+      count++;
+    }
+    this.calendar.push([...currentWeek]);
+    currentWeek = [];
+    for (; count <= lastDay.getDate(); count++) {
+      currentWeek.push(count);
+      if (currentWeek.length === 7 || count === lastDay.getDate()) {
+        this.calendar.push([...currentWeek]);
+        currentWeek = [];
       }
     }
-
-    // Fill the remaining slots
-    if (week.length > 0) {
-      while (week.length < 7) {
-        week.push(null);
-      }
-      weeks.push(week);
+    let l = this.calendar[this.calendar.length-1].length;
+    for (let i = l; i < 7; i++) {
+      this.calendar[this.calendar.length-1].push(-1);
     }
-
-    this.calendar = weeks;
+    console.log(JSON.stringify(this.calendar));
   }
 
-  goToPreviousMonth() {
-    this.currentDate = new Date(
-      this.currentDate.getFullYear(),
-      this.currentDate.getMonth() - 1,
-      1
-    );
-    this.generateCalendar();
+  selectDay(day: number) {
+    if (day !== -1) {
+      let year = this.time.getFullYear();
+      let month = this.time.getMonth();
+      this.selectedDate = `${month+1}/${day}/${year}`
+    }
   }
 
-  goToNextMonth() {
-    this.currentDate = new Date(
-      this.currentDate.getFullYear(),
-      this.currentDate.getMonth() + 1,
-      1
-    );
-    this.generateCalendar();
+  goLast() {
+    this.calendar = [];
+    this.time = new Date(this.time.getFullYear(), this.time.getMonth()-1);
+    this.generateMonth(this.time);
   }
+
+  goNext() {
+    this.calendar = [];
+    this.time = new Date(this.time.getFullYear(), this.time.getMonth()+1);
+    this.generateMonth(this.time);
+  }
+
 }
