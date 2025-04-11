@@ -1,0 +1,16 @@
+<p>Welcome {{username}}!</p>
+
+<button (click)="onLogOut()">Log Out</button>
+
+<p>
+    <input placeholder="Add new todos..." [(ngModel)]="newTodo">
+    <button (click)="add()">+</button>
+</p>
+
+<p *ngFor="let todo of todoList; let i = index" [ngClass]="{'crossed': todo.isDone}">
+    {{todo.todo}}(Added By: {{todo.user}})
+    @if (!todo.isDone) {
+        <span (click)="markAsDone(i)">[✓]</span>
+    }
+    <span (click)="remove(i)">[X]</span>
+</p>
