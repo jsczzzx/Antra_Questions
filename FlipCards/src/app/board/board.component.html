@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="board">
+        @for (row of board; let i = $index; track row) {
+            <div class="row">
+                @for (item of row; let j = $index; track item) {
+                    <div class="grid grid-gray" (click)="onSelect(i,j)">
+                        @if (isFlipped[i][j]) {
+                            {{item}}
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    @if (count === length*length) {
+        <button (click)="initialize()">Start Over</button>
+    }
+</div>
+
+
+
